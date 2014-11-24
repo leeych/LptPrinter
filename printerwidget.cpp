@@ -7,6 +7,8 @@
 #include <QLineEdit>
 #include <QDebug>
 #include <QGroupBox>
+#include <QFileDialog>
+#include <QApplication>
 
 PrinterWidget::PrinterWidget(QWidget *parent) :
     QWidget(parent)
@@ -38,6 +40,41 @@ void PrinterWidget::onPrintButtonClicked()
     }
 }
 
+void PrinterWidget::onSaveButtonClicked()
+{
+    QString content(content_txtedit_->toPlainText().trimmed());
+    qDebug() << content;
+    QString filename = QFileDialog::getSaveFileName(this, STRING_SAVE, QApplication::applicationDirPath(), STRING_TXT_FILTER, 0, 0);
+    if (!filename.isEmpty())
+    {
+        QFile file(filename);
+        if (!file.open(QFile::WriteOnly))
+        {
+            QMessageBox::warning(this, STRING_WARNING, "Can not save this file!");
+            return;
+        }
+        file.write(content.toUtf8());
+        file.close();
+    }
+}
+
+void PrinterWidget::onOpenButtonClicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, STRING_OPEN, QApplication::applicationDirPath(), STRING_TXT_FILTER, 0, 0);
+    if (filename.isEmpty())
+    {
+        return;
+    }
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly))
+    {
+        QMessageBox::warning(this, STRING_WARNING, "Can not open file for read !");
+        return;
+    }
+    QByteArray array = file.readAll();
+    content_txtedit_->setPlainText(array);
+}
+
 void PrinterWidget::initLayout()
 {
     this->setObjectName("PrinterWidget");
@@ -48,19 +85,24 @@ void PrinterWidget::initLayout()
     lpt_cmb_->addItem("LPT2");
     lpt_cmb_->setCurrentIndex(0);
     print_button_ = new QPushButton(STRING_PRINT);
+    save_button_ = new QPushButton(STRING_SAVE);
+    open_button_ = new QPushButton(STRING_OPEN);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addWidget(tip_label_);
     hlayout->addWidget(lpt_cmb_);
-    hlayout->addStretch();
+    hlayout->addStretch(2);
     hlayout->addWidget(print_button_);
-    hlayout->addStretch();
+    hlayout->addStretch(1);
+    hlayout->addWidget(open_button_);
+    hlayout->addStretch(1);
+    hlayout->addWidget(save_button_);
 
     QVBoxLayout *vlayout = new QVBoxLayout;
     content_txtedit_->setPlaceholderText(STRING_TIPS);
     vlayout->addWidget(content_txtedit_);
 
-    QLabel *copyright_label = new QLabel(STRING_COPYRIGHT);
+    QLabel *copyright_label = new QLabel(STRING_COPYRIGHT+"\t\t"+STRING_DECLARE);
     copyright_label->setFrameStyle(QFrame::Sunken);
     QGroupBox *grp = new QGroupBox;
     QVBoxLayout *bottom_vlayout = new QVBoxLayout;
@@ -114,4 +156,6 @@ void PrinterWidget::initLayout()
 void PrinterWidget::initSignalSlots()
 {
     connect(print_button_, &QPushButton::clicked, this, &PrinterWidget::onPrintButtonClicked);
+    connect(save_button_, &QPushButton::clicked, this, &PrinterWidget::onSaveButtonClicked);
+    connect(open_button_, &QPushButton::clicked, this, &PrinterWidget::onOpenButtonClicked);
 }

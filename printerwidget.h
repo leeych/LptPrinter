@@ -17,6 +17,8 @@ signals:
 
 public slots:
     void onPrintButtonClicked();
+    void onSaveButtonClicked();
+    void onOpenButtonClicked();
 
 private:
     void initLayout();
@@ -24,7 +26,7 @@ private:
 
 private:
     QLabel *tip_label_, *arrow_label_;
-    QPushButton *print_button_;
+    QPushButton *print_button_, *save_button_, *open_button_;
     QTextEdit *content_txtedit_;
     QComboBox *lpt_cmb_;
 };
