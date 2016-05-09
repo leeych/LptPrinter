@@ -27,8 +27,10 @@ void PrinterSettingDlg::InitParam()
     param.is_bold_ = false;
     param.is_widen_ = false;
     param.low_byte_ = 0;
-    param.high_byte_ = 0;
+//    param.high_byte_ = 0;
     param.char_spacing_ = 0;
+    param.feedinches_ = 0;
+    param.rowspacing_120_ = 0;
     handler_->SetPrinterParam(param);
     UpdateUI(param);
 }
@@ -38,9 +40,11 @@ void PrinterSettingDlg::onOKButtonClicked()
     PrinterParam param;
     param.is_bold_ = bold_yes_rbt_->isChecked();
     param.is_widen_ = widen_yes_rbt_->isChecked();
-    param.high_byte_ = left_high_spb_->value();
+//    param.high_byte_ = left_high_spb_->value();
     param.low_byte_ = left_low_spb_->value();
     param.char_spacing_ = char_space_spb_->value();
+    param.feedinches_ = feedinches_spb_->value();
+    param.rowspacing_120_ = rowspacing_120_spb_->value();
     handler_->SetPrinterParam(param);
     this->accept();
 }
@@ -58,8 +62,6 @@ void PrinterSettingDlg::InitLayout()
     horizon_label_ = new QLabel(STRING_WIDE_CHAR);
     left_border_label_ = new QLabel(STRING_LEFT_BORDER);
     char_spacing_label_ = new QLabel(STRING_CHAR_SPACE);
-
-    high_label_ = new QLabel(STRING_HIGH_BYTE);
     low_label_  = new QLabel(STRING_LOW_BYTE);
 
     bold_yes_rbt_ = new QRadioButton(STRING_YES,this);
@@ -76,13 +78,18 @@ void PrinterSettingDlg::InitLayout()
     widen_bgrp->addButton(widen_yes_rbt_);
     widen_bgrp->addButton(widen_no_rbt_);
 
-    left_high_spb_ = new QSpinBox(this);
     left_low_spb_ = new QSpinBox(this);
     char_space_spb_ = new QSpinBox(this);
 
-    left_high_spb_->setRange(0, 3);
-    left_low_spb_->setRange(0, 5000);
+    left_low_spb_->setRange(0, 999);
     char_space_spb_->setRange(0, 180);
+
+    feedinches_spb_ = new QSpinBox(this);
+    feedinches_spb_->setRange(0, 255);
+    rowspacing_120_spb_ = new QSpinBox(this);
+    rowspacing_120_spb_->setRange(0, 255);
+
+    QLabel *rowspacing_label = new QLabel(STRING_CUSTOM+STRING_ROW_SPACING, this);
 
     ok_button_ = new QPushButton(STRING_OK);
     reset_button_ = new QPushButton(STRING_RESET);
@@ -96,20 +103,21 @@ void PrinterSettingDlg::InitLayout()
     glayout->addWidget(widen_yes_rbt_, 1, 1, 1, 1, Qt::AlignLeft);
     glayout->addWidget(widen_no_rbt_, 1, 2, 1, 1, Qt::AlignLeft);
 
-    glayout->addWidget(left_border_label_, 2, 0, 1, 1, Qt::AlignRight);
-    glayout->addWidget(high_label_, 2, 1, 1, 1, Qt::AlignLeft);
-    glayout->addWidget(left_high_spb_, 2, 2, 1, 1, Qt::AlignLeft);
-    glayout->addWidget(low_label_, 3, 1, 1, 1, Qt::AlignLeft);
-    glayout->addWidget(left_low_spb_, 3, 2, 1, 1, Qt::AlignLeft);
+    glayout->addWidget(rowspacing_label, 2, 0, 1, 2, Qt::AlignRight);
+    glayout->addWidget(rowspacing_120_spb_, 2, 2, 1, 1, Qt::AlignLeft);
 
-    QHBoxLayout *hlayout = new QHBoxLayout();
-    hlayout->addWidget(char_spacing_label_);
-    hlayout->addWidget(char_space_spb_);
+    glayout->addWidget(char_spacing_label_, 3, 0, 1, 2, Qt::AlignRight);
+    glayout->addWidget(char_space_spb_, 3, 2, 1, 1, Qt::AlignLeft);
+
+    glayout->addWidget(left_border_label_, 4, 0, 1, 2, Qt::AlignRight);
+    glayout->addWidget(left_low_spb_, 4, 2, 1, 1, Qt::AlignLeft);
+
+    glayout->addWidget(new QLabel(STRING_FEEDINCH, this), 5, 0, 1, 2, Qt::AlignRight);
+    glayout->addWidget(feedinches_spb_, 5, 2, 1, 1, Qt::AlignLeft);
 
     QGroupBox *grp = new QGroupBox(STRING_SET);
     QVBoxLayout *grp_vlayout = new QVBoxLayout();
     grp_vlayout->addLayout(glayout);
-    grp_vlayout->addLayout(hlayout);
     grp->setLayout(grp_vlayout);
 
     QHBoxLayout *btnLayout = new QHBoxLayout();
@@ -175,7 +183,7 @@ void PrinterSettingDlg::UpdateUI(const PrinterParam &param)
     bold_no_rbt_->setChecked(!param.is_bold_);
     widen_yes_rbt_->setChecked(param.is_widen_);
     widen_no_rbt_->setChecked(!param.is_widen_);
-    left_high_spb_->setValue(param.high_byte_);
+//    left_high_spb_->setValue(param.high_byte_);
     left_low_spb_->setValue(param.low_byte_);
     char_space_spb_->setValue(param.char_spacing_);
 }

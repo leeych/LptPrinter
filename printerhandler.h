@@ -13,6 +13,8 @@ public:
     void EnableExtend(bool enable);
     void SetLeftMargin(int high, int low);
     void SetCharSpacing(int dotpitch);
+    void SetRowspacing(int dotpitch);
+    void SetFeedinches(int dotpitch);
 
     static PrinterHandler *GetInstance()
     {

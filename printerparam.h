@@ -11,8 +11,11 @@ public:
 
 public:
     bool is_bold_, is_widen_;
-    int high_byte_, low_byte_;
+    int low_byte_;
     int char_spacing_;
+
+    int feedinches_;
+    int rowspacing_120_;
 };
 
 #endif // PRINTERPARAM_H

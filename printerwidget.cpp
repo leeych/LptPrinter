@@ -29,12 +29,12 @@ void PrinterWidget::onPrintButtonClicked()
     QString content = content_txtedit_->toPlainText();
     QString lpt = lpt_cmb_->currentText().trimmed();
     FILE* fp = fopen(lpt.toUtf8().data(), "r+");
-    if (fp == nullptr)
-    {
-        QMessageBox::warning(this, STRING_WARNING, STRING_OPEN_LPT_FAILED);
-        return;
-    }
-    else
+//    if (fp == nullptr)
+//    {
+//        QMessageBox::warning(this, STRING_WARNING, STRING_OPEN_LPT_FAILED);
+//        return;
+//    }
+//    else
     {
         QFile file;
         file.open(fp, QFile::ReadWrite);
@@ -52,6 +52,15 @@ void PrinterWidget::onPrintButtonClicked()
          * ESC $ @  // 设定汉字模式
          * ESC ( H  // 解除汉字模式
          * ESC VT n1 n2  // 直接进纸若干行
+         * ESC % 5 n  // 直接进纸n/120英寸
+         *
+         * ESC X  // 设置下划线打印方式
+         * ESC Y  // 取消下划线打印方式
+         * ESC D  // 设置高速打印方式
+         *
+         * ESC 6  // 设置1/6英寸行距
+         * ESC 8  // 设置1/8英寸行距
+         * ESC % 9 n1 n2  // 设置1/120英寸行距
         */
 
         PrinterHandler *handler = PrinterHandler::GetInstance();
@@ -74,8 +83,8 @@ void PrinterWidget::onPrintButtonClicked()
         // ESC ( n1 n2
         array.append(27);
         array.append(40);
-//        unsigned char ch = 0x00;
-        array.append(param.high_byte_);
+        unsigned char ch = 0x00;
+        array.append(ch);
         array.append(param.low_byte_);
 
         if (param.is_bold_)
@@ -88,12 +97,24 @@ void PrinterWidget::onPrintButtonClicked()
             array.append(28);
             array.append('p');
         }
+        if (param.rowspacing_120_ != 0)
+        {
+            array.append(27);
+            array.append(37);
+            array.append(57);
+            unsigned char ch = NULL;
+            array.append(ch);
+            array.append(param.rowspacing_120_);
+        }
 
-//        array.append(27);
-//        array.append(11);
-//        unsigned char ch = NULL;
-//        array.append(ch);
-//        array.append(4);
+        // 直接进纸n/120英寸
+        if (param.feedinches_ != 0)
+        {
+            array.append(27);
+            array.append(37);
+            array.append(53);
+            array.append(param.feedinches_);
+        }
 
         array.append(content.toLocal8Bit());
 

@@ -38,6 +38,9 @@ private:
     QRadioButton *widen_yes_rbt_, *widen_no_rbt_;
     QSpinBox *left_high_spb_, *left_low_spb_, *char_space_spb_;
 
+    QSpinBox *feedinches_spb_;
+    QSpinBox *rowspacing_120_spb_;
+
     QPushButton *ok_button_, *reset_button_;
 };
 

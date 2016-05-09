@@ -27,6 +27,12 @@
 #define     STRING_RESET        QObject::tr("Reset")
 #define     STRING_HIGH_BYTE    QObject::tr("High byte")
 #define     STRING_LOW_BYTE     QObject::tr("Low byte")
+#define     STRING_ROW_SPACING  QObject::tr("Row spacing")
+#define     STRING_SIX_INCH     QObject::tr("1/6 inch")
+#define     STRING_EIGHT_INCH   QObject::tr("1/8 inch")
+#define     STRING_120_INCH     QObject::tr("1/120 inch")
+#define     STRING_CUSTOM       QObject::tr("Custom")
+#define     STRING_FEEDINCH     QObject::tr("Feed inches")
 
 
 #endif // MACROSTRINGS_H

@@ -17,9 +17,11 @@ void PrinterHandler::SetPrinterParam(const PrinterParam &param)
 {
     param_->is_bold_ = param.is_bold_;
     param_->is_widen_ = param.is_widen_;
-    param_->high_byte_ = param.high_byte_;
+//    param_->high_byte_ = param.high_byte_;
     param_->low_byte_ = param.low_byte_;
     param_->char_spacing_ = param.char_spacing_;
+    param_->feedinches_ = param.feedinches_;
+    param_->rowspacing_120_ = param.rowspacing_120_;
 }
 
 PrinterParam &PrinterHandler::GetPrinterParam()
@@ -39,11 +41,21 @@ void PrinterHandler::EnableExtend(bool enable)
 
 void PrinterHandler::SetLeftMargin(int high, int low)
 {
-    param_->high_byte_ = high;
+//    param_->high_byte_ = high;
     param_->low_byte_ = low;
 }
 
 void PrinterHandler::SetCharSpacing(int dotpitch)
 {
     param_->char_spacing_ = dotpitch;
+}
+
+void PrinterHandler::SetRowspacing(int dotpitch)
+{
+    param_->rowspacing_120_ = dotpitch;
+}
+
+void PrinterHandler::SetFeedinches(int dotpitch)
+{
+    param_->feedinches_ = dotpitch;
 }

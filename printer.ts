@@ -46,7 +46,7 @@
     <message>
         <location filename="macrostrings.h" line="14"/>
         <source>Copyright Reserved @ HuaiHe Bank</source>
-        <translation type="unfinished">版权所有  © LEEYCH in hhBank </translation>
+        <translation>版权所有  © LEEYCH in 淮河银行</translation>
     </message>
     <message>
         <location filename="macrostrings.h" line="15"/>
@@ -81,12 +81,12 @@
     <message>
         <location filename="macrostrings.h" line="22"/>
         <source>Left border set</source>
-        <translation>设置左边界：</translation>
+        <translation type="unfinished">打印左边界(单位1/180英寸)：</translation>
     </message>
     <message>
         <location filename="macrostrings.h" line="23"/>
         <source>Character space</source>
-        <translation>字符间距：</translation>
+        <translation>字符间距(单位1/180英寸)：</translation>
     </message>
     <message>
         <location filename="macrostrings.h" line="24"/>
@@ -117,6 +117,36 @@
         <location filename="macrostrings.h" line="29"/>
         <source>Low byte</source>
         <translation>微调</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="30"/>
+        <source>Row spacing</source>
+        <translation>行距(单位1/120英寸)：</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="31"/>
+        <source>1/6 inch</source>
+        <translation>1/6英寸</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="32"/>
+        <source>1/8 inch</source>
+        <translation>1/8英寸</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="33"/>
+        <source>1/120 inch</source>
+        <translation type="unfinished">(1/120英寸)</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="34"/>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <location filename="macrostrings.h" line="35"/>
+        <source>Feed inches</source>
+        <translation type="unfinished">直接进纸n单位(单位1/120英寸)：</translation>
     </message>
 </context>
 </TS>
